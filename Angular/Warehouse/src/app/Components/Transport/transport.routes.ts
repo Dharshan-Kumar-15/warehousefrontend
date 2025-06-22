@@ -18,7 +18,8 @@ export const TRANSPORT_ROUTES:Routes=[
     path:'edit_shipments/:id',
     component:TransportFormComponent,
     data: {
-    renderMode: 'client' // Force client-side only
+      renderMode: 'client' as const, // Type-safe constant
+      ssr: false // Explicit SSR disable
     },
     title:'Edit Shipments'
 },
@@ -26,7 +27,8 @@ export const TRANSPORT_ROUTES:Routes=[
     path:'shipments_status/:id',
     component:TransportStatusComponent,
     data: {
-    renderMode: 'client' // Force client-side only
+      renderMode: 'client' as const, // Type-safe constant
+      ssr: false // Explicit SSR disable
     },
     title:'Update Shipment Status'
 },

@@ -23,7 +23,8 @@ export const ADMIN_ROUTES: Routes=[
     path: 'edit_products/:id',
     component:ProductFormComponent,
     data: {
-    renderMode: 'client' // Force client-side only
+      renderMode: 'client' as const, // Type-safe constant
+      ssr: false // Explicit SSR disable
     },
     title:'Edit Product'
 }

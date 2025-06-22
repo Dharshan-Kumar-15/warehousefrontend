@@ -17,7 +17,8 @@ export const WAREHOUSE_ROUTES:Routes=[
     path:'edit_items/:id',
     component:WarehouseFormComponent,
     data: {
-    renderMode: 'client' // Force client-side only
+      renderMode: 'client' as const, // Type-safe constant
+      ssr: false // Explicit SSR disable
     },
     title:'Edit Items'
 },

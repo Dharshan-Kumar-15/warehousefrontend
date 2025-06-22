@@ -30,7 +30,8 @@ export const BUYER_ROUTES:Routes=[
         path:'order_details/:id',
         component:OrderDetailsComponent,
         data: {
-    renderMode: 'client' // Force client-side only
+      renderMode: 'client' as const, // Type-safe constant
+      ssr: false // Explicit SSR disable
     },
         title:'Order Details'
     },

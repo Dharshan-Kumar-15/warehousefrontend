@@ -1,0 +1,22 @@
+{
+  "routes": {
+    "/": {},
+    "/admin": {},
+    "/admin/create_products": {},
+    "/admin/products": {},
+    "/auth": {},
+    "/auth/login": {},
+    "/auth/register": {},
+    "/buyer": {},
+    "/buyer/create_orders": {},
+    "/buyer/orders": {},
+    "/buyer/products": {},
+    "/buyer/profile": {},
+    "/transport": {},
+    "/transport/create_shipments": {},
+    "/transport/shipments": {},
+    "/warehouse": {},
+    "/warehouse/add_items": {},
+    "/warehouse/items": {}
+  }
+}
