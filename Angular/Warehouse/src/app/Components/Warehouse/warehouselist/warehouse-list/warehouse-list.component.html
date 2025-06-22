@@ -1,0 +1,70 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a routerLink="/" class="navbar-brand">Inventory Management</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" routerLink="/warehouse/items" >Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" routerLink="/warehouse/add_items" >Add Items</a>
+        </li> 
+       
+      </ul>
+     
+    </div>
+       
+            <ul class="navbar-nav" id="navbar-item">
+                
+                    <li class="nav-item">
+                        <a class="nav-link btn-primary btn" (click)="logout()">Logout</a>
+                    </li>
+                      
+                
+            </ul>
+        
+    </div>
+</nav>
+
+
+<div class="container mt-4">
+    <h2>Warehouse Inventory</h2>
+    <button type="button" routerLink="/warehouse/add_items" class="btn btn-primary mb-3">Add New Item</button>
+
+    @if(warehouseItems | async; as items){
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Location</th>
+                        
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(item of items; track trackById($index,item)){
+                        <tr>
+                            <td>{{item.id}}</td>
+                            <td>{{item.product.product_name}}</td>
+                            <td>{{item.quantity}}</td>
+                            <td>{{item.location}}</td>
+                            
+                            
+                            <td>
+                            <button (click)="editItem(item.id! )" type="button" class="btn btn-sm btn-info me-2">Edit</button>
+                            <button (click)="deleteItem(item.id!)" type="button" class="btn btn-sm btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                       
+                    }
+                </tbody>
+            </table>
+        </div>
+    }@else{
+        <app-spinner></app-spinner>
+    }
+
+</div>

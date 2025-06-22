@@ -1,0 +1,130 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a routerLink="/buyer/profile" class="navbar-brand">Buyer</a>
+       
+            <ul class="navbar-nav" id="navbar-item">
+                
+                    <li class="nav-item">
+                        <a class="nav-link btn-primary btn" (click)="logout()">Logout</a>
+                    </li>
+                      
+                
+            </ul>
+        <!-- </div> -->
+    </div>
+</nav>
+<!--AFter Nav-->
+
+<div class="container mt-4">
+ 
+  <div class="row">
+    <!--<div class="col-md-6">
+      <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+          <h3 class="mb-0">Profile Information</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="name" class="form-label">Full Name</label>
+              <input type="text" class="form-control" formControlName="name" id="name"
+                     [class.is-invalid]="profileForm.get('name')?.invalid && profileForm.get('name')?.touched">
+              @if (profileForm.get('name')?.invalid && profileForm.get('name')?.touched) {
+                <div class="invalid-feedback">
+                  @if (profileForm.get('name')?.errors?.['required']) {
+                    <div>Name is required</div>
+                  }
+                  @if (profileForm.get('name')?.errors?.['minlength']) {
+                    <div>Minimum 3 characters required</div>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="mb-3">
+              <label for="address" class="form-label">Address</label>
+              <textarea class="form-control" formControlName="address" rows="3" id="address"
+                        [class.is-invalid]="profileForm.get('address')?.invalid && profileForm.get('address')?.touched"></textarea>
+              @if (profileForm.get('address')?.invalid && profileForm.get('address')?.touched) {
+                <div class="invalid-feedback">
+                  @if (profileForm.get('address')?.errors?.['required']) {
+                    <div>Address is required</div>
+                  }
+                  @if (profileForm.get('address')?.errors?.['minlength']) {
+                    <div>Minimum 10 characters required</div>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="mb-3">
+              <label for="phone" class="form-label">Phone Number</label>
+              <input type="tel" class="form-control" formControlName="phone" id="phone"
+                     [class.is-invalid]="profileForm.get('phone')?.invalid && profileForm.get('phone')?.touched">
+              @if (profileForm.get('phone')?.invalid && profileForm.get('phone')?.touched) {
+                <div class="invalid-feedback">
+                  @if (profileForm.get('phone')?.errors?.['required']) {
+                    <div>Phone is required</div>
+                  }
+                  @if (profileForm.get('phone')?.errors?.['pattern']) {
+                    <div>Valid phone number required (10-15 digits)</div>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="mb-3">
+              <label for="paymentMode" class="form-label">Preferred Payment Method</label>
+              <select class="form-select" formControlName="paymentMode" id="paymentMode">
+                <option value="CREDIT_CARD">Credit Card</option>
+                <option value="DEBIT_CARD">Debit Card</option>
+                <option value="PAYPAL">PayPal</option>
+                <option value="COD">Cash on Delivery</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid || isLoading">
+              @if (isLoading) {
+                <app-spinner ></app-spinner>
+              } @else {
+                {{ isEdit ? 'Update Profile' : 'Save Profile' }}
+              }
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  -->
+    <div class="col-md-6">
+      <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+          <h3 class="mb-0">Order Product</h3>
+        </div>
+        <div class="card-body">
+          <div class="mb-3">
+            <strong>Create Orders:</strong> <a class="btn btn-info ms-2" routerLink="/buyer/create_orders">Create Order</a>   
+          </div>
+          <div class="mb-3">
+            <strong>My Orders:</strong><a class="btn btn-info ms-2" routerLink="/buyer/orders">My Orders</a>
+          </div>
+          
+          <!-- <div class="mb-3">
+            <strong>Member Since:</strong> {{ authService.currentUser().createdAt }}
+          </div> -->
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-warning">
+          <h3 class="mb-0">Account Security</h3>
+        </div>
+        <div class="card-body">
+          <button type="button" class="btn btn-outline-danger me-2" (click)="logout()">
+            Logout
+          </button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

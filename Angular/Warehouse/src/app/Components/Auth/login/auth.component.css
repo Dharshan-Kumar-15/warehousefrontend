@@ -1,0 +1,21 @@
+#login-bg{
+    background-color: lightskyblue;
+}
+#login:hover{
+    color: blueviolet;
+}
+#button-bg{
+    background-color: transparent;
+    color: black;
+}
+#button-bg:hover{
+    background-color:rgba(14, 58, 236, 0.918);
+    color: white;
+}
+#sign-bg{
+    background-color: transparent;
+}
+#sign-bg:hover{
+    background-color: gold;
+    
+}

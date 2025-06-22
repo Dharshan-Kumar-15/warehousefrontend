@@ -1,0 +1,138 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a routerLink="/buyer/profile" class="navbar-brand">Buyer</a>
+
+        
+      <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" routerLink="/buyer/products" >Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white"  routerLink="/buyer/products" >Products</a>
+        </li>
+         
+        
+       
+      </ul>
+     
+    </div>
+
+            <ul class="navbar-nav" id="navbar-item">
+                
+                    <li class="nav-item">
+                        <a class="nav-link btn-primary btn" (click)="logout()">Logout</a>
+                    </li>
+            
+            </ul>
+        
+    </div>
+</nav>
+
+
+<div class="container mt-4">
+    <h2>Create New Order</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Add Products</h3>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="orderForm" >
+                        
+                         <div class="mb-3">
+                            <label for="productId" class="form-label me-2 mt-2">Select Product</label>
+                            <select formControlName="productId" class="form-select" id="productId">
+                                <option value="">Choose a Product</option>
+                                @if(products$ |async; as products){
+                                    @for(product of products; track product.product_id){
+                                        <option [value]="product.product_id" [disabled]="product.product_stocks <= 0">
+                                             {{product.product_id }} 
+                                           Name: {{product.product_name}} Price: {{product.product_price}}
+                                            ({{product.product_stocks}} in stock)
+                                        </option>
+                                    }
+                                }
+                            </select>
+                        </div> 
+
+                          <div class="mb-3">
+                            <label for="quantity" class="form-label">Quantity</label>
+                            <input type="number" class="form-control" formControlName="quantity" min="1" id="quantity">
+                                     @if (orderForm.get('quantity')?.invalid && orderForm.get('quantity')?.touched) {
+                                    <div class="text-danger">Minimum quantity is 1</div>
+                                         }
+                        </div> 
+
+                        <button type="button" (click)="addProduct()"
+                                [disabled]="!orderForm.get('productId')?.value || orderForm.get('quantity')?.invalid" 
+                                class="btn btn-outline-primary">
+                            <i class="bi bi-plus-circle me-2"></i>Add to Order  
+                        </button> 
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h3>Order Summary</h3>
+                </div>
+                <div class="card-body">
+                    @if(selectedProducts.length >0){
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Subtotal</th>
+                                        <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for(item of selectedProducts; track item.product.product_id; let i=$index){
+                                    <tr>
+                                        <td>{{item.product.product_name}}</td>
+                                        <td>{{item.product.product_price}}</td>
+                                        <td>{{item.quantity}}</td>
+                                        <td>{{item.product.product_price * item.quantity}}</td>
+                                        <td class="text-end">
+                                            <button type="button" (click)="removeProduct(i)" class="btn btn-sm btn-outline-danger">
+                                                    remove
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot class="table-group-divider">
+                                <tr>
+                                    <th colspan="3">Total</th>
+                                    <th colspan="2"> {{ getTotal()}}</th>
+                                </tr>
+                            </tfoot>
+                            </table>
+                        </div>
+                        <div class="d-grid mt-3">
+                            <button type="button" (click)="submitOrder()" class="btn btn-primary btn-lg"
+                                    [disabled]="isLoading" >
+                            @if(isLoading){
+                                <app-spinner></app-spinner>
+                            }@else{
+                                <i class="bi bi-check-circle me-2"></i>Place Order
+                            }
+                        </button>
+                        </div>
+                    }@else{
+                        <div class="alert alert-info">
+                                 No products added yet. 
+                                    Select products from the left panel to add to your order.
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

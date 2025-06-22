@@ -1,0 +1,86 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a routerLink="/" class="navbar-brand">Inventory Management</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" routerLink="/warehouse/items" >Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" routerLink="/warehouse/items" >Items</a>
+        </li> 
+       
+      </ul>
+     
+    </div>
+       
+            <ul class="navbar-nav" id="navbar-item">
+                
+                    <li class="nav-item">
+                        <a class="nav-link btn-primary btn" (click)="logout()">Logout</a>
+                    </li>
+                      
+                
+            </ul>
+        
+    </div>
+</nav>
+
+
+
+
+<div class="container mt-4">
+    <p>{{Id}}-ware</p>
+    <h2>{{isEdit ? 'Edit' : 'Add'}} Warehouse Item</h2>
+    <form [formGroup]="warehouseForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+            <label for="product_id" class="form-label">Product</label>
+            <select formControlName="product_id" id="product_id" class="form-select"
+                    [class.is-invalid]="warehouseForm.get('product_id')?.invalid && 
+                           warehouseForm.get('product_id')?.touched">
+              <option value="">Select a product</option> 
+              @if(products$ | async; as products) {
+                @for(product of products; track product.product_id){
+                    
+                   
+                    <option [value]="product.product_id">{{product.product_name}} -Stock: {{product.product_stocks}}</option>
+                    
+                }
+              }        
+            </select>
+            @if(warehouseForm.get('product_id')?.invalid && warehouseForm.get('product_id')?.touched){
+                <div class="text-danger">Product is Required</div>
+            }
+        </div>
+        <!-- <div class="mb-3">
+            <label for="quantity" class="form-label">Quantity</label>
+            @if(products$ | async; as products) {
+                @for(product of products; track product.product_id){
+            <input type="number" formControlName="quantity" id="quantity" class="form-control" value="product.product_stocks"
+                    [class.is-invalid]="warehouseForm.get('quantity')?.invalid && warehouseForm.get('quantity')?.touched">
+                }
+              } 
+                    
+             @if(warehouseForm.get('quantity')?.invalid && warehouseForm.get('quantity')?.touched){
+                <div class="text-danger">Quantity is  Required and must be at least 1</div>
+             }       
+        </div>  -->
+
+        <div class="mb-3">
+            <label for="location" class="form-label">Location</label>
+            <input type="text" formControlName="location" id="location" class="form-control"
+            [class.is-invalid]="warehouseForm.get('location')?.invalid && warehouseForm.get('location')?.touched">
+            @if(warehouseForm.get('location')?.invalid && warehouseForm.get('location')?.touched){
+                <div class="text-danger">Location is Required</div>
+            }
+        </div>
+        <button type="submit" class="btn btn-primary me-2" [disabled]="warehouseForm.invalid || isLoading">
+            @if(isLoading){
+                <app-spinner></app-spinner>
+            }@else{
+                {{isEdit ? 'Update' : 'Save'}} Item
+            }
+        </button>
+        <button type="button" class="btn btn-danger" routerLink="/warehouse/items">Cancel</button>
+    </form>
+</div>

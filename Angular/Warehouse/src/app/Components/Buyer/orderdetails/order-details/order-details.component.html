@@ -1,0 +1,158 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a routerLink="/buyer/profile" class="navbar-brand">Buyer file</a>
+       
+      <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" routerLink="/buyer/products" >Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" routerLink="/buyer/products" >Products</a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link text-white" routerLink="/buyer/create_orders" >Add Products</a>
+        </li>
+        
+       
+      </ul>
+     
+    </div>
+        
+            <ul class="navbar-nav" id="navbar-item">
+                
+                    <li class="nav-item">
+                        <a class="nav-link btn-primary btn" (click)="logout()">Logout</a>
+                    </li>
+            
+            </ul>
+        
+    </div>
+</nav>
+
+
+
+
+
+
+<div class="container">
+    @if(isLoading){
+        <app-spinner></app-spinner>
+    }@else if(order){
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Order  {{order.order_id}}</h2>
+            <span [class]="getStatusBadgeClass(order.status!)">
+                {{order.status}}
+            </span>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0">Order Items</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>    
+                                        
+                                        <th>Product</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Subtotal</th>
+                                        <th>ID</th>
+                                         <th>Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for(item of order.items; track item.product.product_id){
+                                        <tr>
+                                            
+                                           
+                                            <td>
+                                                <div class="d-flex align-items-center" >
+                                                        
+                                                       <!-- <img   [src]="imageUrl" width="200px" height="200px"
+                                                                alt="{{item.product.product_name}}" class="product-thumb me-3">-->
+                                                    
+                                                    {{item.product.product_name}}
+                                                </div>
+                                            </td>
+                                            <td>{{item.price}}</td>
+                                            <td>{{item.quantity}}</td>
+                                            <td>{{item.price *  item.quantity}}</td>
+                                            <td>{{item.orderItemId}}</td>
+                                            <td>
+                                                <button (click)="deleteOrder(item.orderItemId!)" type="button" class="btn btn-danger">Delete</button>
+                                            </td>
+                            
+                                        </tr>
+                                    }
+                                </tbody>
+                                
+                                    <tfoot class="table-group-divider">
+                                    <tr>
+                                        <th colspan="3">Total</th>
+                                        <th>{{ order.totalAmount  }}</th>
+                                    </tr>
+                                    </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-header bg-info text-white">
+                            <h3 class="mb-0"> Shipping Information</h3>
+                        </div>
+                        <div class="card-body">
+                            <h5>{{order.buyer.name}}</h5>
+                            <p class="mb-1">{{order.buyer.address}}</p>
+                            <p class="mb-1">Phone:{{order.buyer.phone}}</p>
+                            <p>Payment: {{order.buyer.paymentMode }}</p>
+
+                            @if(order.transportation){
+                                <hr>
+                                <h5>Shipping Details</h5>
+                                <p class="mb-1">
+                                    <strong>Method:</strong> {{order.transportation.method}}
+                                </p>
+                                <p class="mb-1">
+                                    <strong>Status:</strong>
+                                    <span [class]="getStatusBadgeClass(order.transportation.status!)">
+                                        {{order.transportation.status}}</span>
+                                </p>
+                                @if(order.transportation.trackingNumber){
+                                    <p class="mb-1">
+                                        <strong>Tracking: </strong> {{order.transportation.trackingNumber}}
+                                    </p>
+                                }
+                                @if(order.transportation.estimatedDelivery){
+                                    <p class="mb-1">
+                                        <strong>Est. Delivery</strong>
+                                        {{order.transportation.estimatedDelivery}}
+                                    </p>
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="button" class="btn btn-outline-secondary" routerLink="/buyer/orders">
+                            <i class="bi bi-arrow-left me-2"></i>Back to Orders
+                        </button>
+                        @if(order.status === 'PENDING'){
+                            <button  type="button" (click)="deleteOrder(order.order_id!)"  class="btn btn-outline-danger">
+                                    <i class="bi bi-x-circle me-2"></i>Cancel Order
+                            </button>
+                        }
+                    </div>
+               </div>
+        </div>
+    }@else{
+            <div class="alert alert-danger">
+                Order not found. <a routerLink="/buyer/orders" class="alert-link">View your orders</a>
+            </div>
+    }
+</div>

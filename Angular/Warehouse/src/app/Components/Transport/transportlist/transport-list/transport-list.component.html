@@ -1,0 +1,76 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a routerLink="/" class="navbar-brand">Inventory Management</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" routerLink="/transport/shipments" >Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" routerLink="/transport/shipments" >Shipments</a>
+        </li> 
+       
+      </ul>
+     
+    </div>
+       
+            <ul class="navbar-nav" id="navbar-item">
+                
+                    <li class="nav-item">
+                        <a class="nav-link btn-primary btn" (click)="logout()">Logout</a>
+                    </li>
+                      
+                
+            </ul>
+        <!-- </div> -->
+    </div>
+</nav>
+
+
+<div class="container mt-4">
+    <h2>Transportation Management</h2>
+    <button routerLink="/transport/create_shipments" type="button" class="btn btn-info mb-3">Add New Shipment</button>
+    @if(shipments$ |async; as shipments){
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Order ID</th>
+                        <th>Method</th>
+                        <th>Status</th>
+                        <th>Tracking No.</th>
+                        <th>Estimated Delivery</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(shipment of shipments; track trackById($index,shipment)){
+                        <tr>
+                            <td>{{shipment.transId}}</td>
+                            <td>{{shipment.order.order_id}}</td>
+                            <td>{{shipment.method}}</td>
+                            <td>
+                                <span [class]="getStatusBadgeclass(shipment.status!)">
+                                {{shipment.status}}
+                            </span>
+                                
+                            </td>
+                            <td>{{shipment.trackingNumber || 'N/A'}}</td>
+                            <td>{{shipment. estimatedDelivery || 'N/A'}}</td>
+                            <td>
+                                <button (click)="editShipments(shipment.transId!)" class="btn btn-info me-2 btn-sm" type="button">Edit</button>
+                                <button (click)="updateStatus(shipment.transId!)" type="button" class="btn btn-warning btn-sm me-2">Status</button>
+                                <button (click)="deleteShipments(shipment.transId!)" type="button" class="btn btn-sm btn-danger">Delete</button>
+                           
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    @else{
+        <app-spinner></app-spinner>
+    }
+</div>

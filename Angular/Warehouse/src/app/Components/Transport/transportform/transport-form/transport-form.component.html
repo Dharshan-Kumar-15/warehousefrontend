@@ -1,0 +1,96 @@
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a routerLink="/" class="navbar-brand">Inventory Management</a>
+        
+      <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" routerLink="/transport/shipments" >Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" routerLink="/transport/shipments" >Shipments</a>
+        </li> 
+       
+      </ul>
+     
+    </div>
+       
+            <ul class="navbar-nav" id="navbar-item">
+                
+                    <li class="nav-item">
+                        <a class="nav-link btn-primary btn" (click)="logout()">Logout</a>
+                    </li>
+                      
+                
+            </ul>
+        <!-- </div> -->
+    </div>
+</nav>
+
+<div class="container mt-4">
+        <h2>{{isEdit ? 'Edit' : 'Add'}} Shipments</h2>
+        <form [formGroup]="transportForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+                <label for="order_id" class="form-label">Order</label>
+                <select formControlName="order_id" id="order_id" class="form-select"
+                [class.is-invalid]="transportForm.get('order_id')?.invalid && transportForm.get('order_id')?.touched">
+                <option value="">Select an Order</option>
+                @if(orders$ |async; as orders){
+                    @for(order of orders; track order.order_id){
+                        <option [value]="order.order_id">Order {{order.order_id}} - {{order.buyer.name}}</option>
+                    }
+                }
+
+                </select>
+                @if(transportForm.get('order_id')?.invalid && transportForm.get('order_id')?.touched){
+                    <div class="text-danger">Order is required</div>
+                }
+            </div>
+            <div class="mb-3">
+                <label for="method" class="form-label">Transport Method</label>
+                <select formControlName="method" id="method" class="form-select"
+                            [class.is-invalid]="transportForm.get('method')?.invalid && transportForm.get('method')?.touched">
+                    <option value="">Select a Method</option>
+                    @for(method of transportMethods; track method){
+                        <option [value]="method">{{method}}</option>
+                    }
+
+                </select>
+                @if(transportForm.get('method')?.invalid && transportForm.get('method')?.touched){
+                    <div class="text-danger">Method is required</div>
+                }
+            </div>
+
+
+            <div class="mb-3">
+                <label for="status" class="form-label">Transport Status</label>
+                <select formControlName="status" id="status" class="form-select"
+                            [class.is-invalid]="transportForm.get('status')?.invalid && transportForm.get('status')?.touched">
+                    <option value="">Select a Status</option>
+                    @for(status of transportStatus; track  status){
+                        <option [value]="status">{{status}}</option>
+                    }
+
+                </select>
+                @if(transportForm.get('order_id')?.invalid && transportForm.get('order_id')?.touched){
+                    <div class="text-danger">Method is required</div>
+                }
+            </div>
+
+            <div class="mb-3">
+                <label for="estimatedDelivery" class="form-label">EstimatedDelivery</label>
+                <input type="date" id="estimatedDelivery" formControlName="estimatedDelivery" class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-info me-2" [disabled]="transportForm.invalid ||isLoading">
+                @if(isLoading){
+                    <app-spinner></app-spinner>
+                }@else{
+                    {{isEdit ? 'Updated' : 'Save'}}
+                }
+            </button>
+            <button type="button" routerLink="/transport/shipments" class="btn btn-danger">Cancel</button>
+        </form>
+</div>

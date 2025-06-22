@@ -1,0 +1,10 @@
+body{
+     padding-top: 56px; 
+    
+}
+#navbar-item{
+     display: flex;
+     justify-content: end;
+     align-items: end;
+}
+     

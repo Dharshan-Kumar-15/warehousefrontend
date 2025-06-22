@@ -1,0 +1,26 @@
+
+#box{
+    background-color: rgba(121, 162, 188, 0.916);
+}
+#card-item{
+    background-color: lightslategrey;
+}
+
+#login-bg{
+    background-color: transparent;
+    color: black;
+}
+#login-bg:hover{
+    background-color: rgba(41, 41, 223, 0.886);
+    color: white;
+}
+#sign-bg{
+    background-color: transparent;
+    color: black;
+}
+#sign-bg:hover{
+    background-color: gold;
+}
+#signup:hover{
+    color: blue ;
+}
