@@ -6,8 +6,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build":  "ng build",
-    "build:ssr": "ng build --configuration production && ng run warehouse:server:production",
-  "serve:ssr": "node dist/warehouse/server/server.mjs",  
+    "build:ssr": "ng build --configuration production && ng run Warehouse:server:production",
+  "serve:ssr": "node dist/Warehouse/server/server.mjs",  
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
     
