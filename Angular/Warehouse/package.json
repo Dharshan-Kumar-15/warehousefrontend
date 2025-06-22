@@ -9,8 +9,8 @@
     "build:ssr": "ng build --configuration production && ng run warehouse:server:production",
   "serve:ssr": "node dist/warehouse/server/server.mjs",  
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "serve:ssr:Warehouse": "node dist/warehouse/server/server.mjs"
+    "test": "ng test"
+    
   },
   "private": true,
   "dependencies": {
