@@ -15,7 +15,7 @@ export class AuthService {
   private currentUserSubject= signal<User | null>(null);
   currentUser= this.currentUserSubject.asReadonly();
   isLoading= signal(false);
-  apiUrl:string='http://localhost:8080/auth'
+  apiUrl:string='https://warehousebackend-production-6157.up.railway.app/'
 
 
   constructor(private http:HttpClient, private router:Router,
