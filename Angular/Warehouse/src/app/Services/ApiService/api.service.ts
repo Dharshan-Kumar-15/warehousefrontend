@@ -14,7 +14,8 @@ import { OrderItem } from '../../Models/OrderItems/order-item.model';
   providedIn: 'root'
 })
 export class ApiService {
-  private apiUrl= 'http://localhost:8080/'
+  //private apiUrl= 'http://localhost:8080/'
+  private apiUrl='https://warehousebackend-production-6157.up.railway.app/';
 
   constructor(private http: HttpClient) { }
 
