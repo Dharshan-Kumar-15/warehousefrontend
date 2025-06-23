@@ -2,13 +2,13 @@
   "name": "warehouse",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "ng": "ngx ng",
+    "start": "ngx ng serve",
+    "build": "ngx ng build",
     "build:ssr": "ngx ng build --configuration production && ng run Warehouse:server:production",
     "serve:ssr": "node dist/Warehouse/server/main.js",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "watch": "ngx ng build --watch --configuration development",
+    "test": "ngx ng test"
   },
   "private": true,
   "dependencies": {
