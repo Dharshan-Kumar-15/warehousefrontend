@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Warehouse": {
+    "warehouse": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/Warehouse",
+            "outputPath": "dist/warehouse",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -66,7 +66,7 @@
         },"server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
-            "outputPath": "dist/Warehouse/server",
+            "outputPath": "dist/warehouse/server",
             "main": "src/main.server.ts",
             "tsConfig": "tsconfig.server.json"
           },
@@ -81,10 +81,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "Warehouse:build:production"
+              "buildTarget": "warehouse:build:production"
             },
             "development": {
-              "buildTarget": "Warehouse:build:development"
+              "buildTarget": "warehouse:build:development"
             }
           },
           "defaultConfiguration": "development"
