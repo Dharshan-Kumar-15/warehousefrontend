@@ -11,7 +11,7 @@ export const routes: Routes = [
         
     },
     // Redirect 
-    { path:'',redirectTo:'admin',pathMatch:'full'},
+    { path:'',redirectTo:'auth',pathMatch:'full'},
     { 
     path: 'admin', 
     loadChildren: () => import('./Components/Admin/admin.routes').then(m => m.ADMIN_ROUTES),
