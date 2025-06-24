@@ -1,7 +1,50 @@
-import { bootstrapApplication } from '@angular/platform-browser';
-import { AppComponent } from './app/app.component';
-import { config } from './app/app.config.server';
+// import { bootstrapApplication } from '@angular/platform-browser';
+// import { AppComponent } from './app/app.component';
+// import { config } from './app/app.config.server';
 
-const bootstrap = () => bootstrapApplication(AppComponent, config);
+// const bootstrap = () => bootstrapApplication(AppComponent, config);
 
-export default bootstrap;
+// export default bootstrap;
+import {
+  AngularNodeAppEngine,
+  createNodeRequestHandler,
+  isMainModule,
+  writeResponseToNodeResponse,
+} from '@angular/ssr/node';
+import express from 'express';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const serverDistFolder = dirname(fileURLToPath(import.meta.url));
+const browserDistFolder = resolve(serverDistFolder, '../browser');
+
+const app = express();
+const angularApp = new AngularNodeAppEngine();
+
+app.use(
+  express.static(browserDistFolder, {
+    maxAge: '1y',
+    index: false,
+    redirect: false,
+  }),
+);
+
+app.use('/**', (req, res, next) => {
+  angularApp
+    .handle(req)
+    .then((response) =>
+      response ? writeResponseToNodeResponse(response, res) : next(),
+    )
+    .catch(next);
+});
+
+if (isMainModule(import.meta.url)) {
+  console.log(" Server initializing... from main.server.ts");
+  const port = process.env['PORT'] || 4000;
+  app.listen(port, () => {
+    console.log(` Node Express server listening on http://localhost:${port}`);
+  });
+}
+
+export const reqHandler = createNodeRequestHandler(app);
+
